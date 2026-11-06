@@ -43,6 +43,16 @@ export const useAuthUserStore = defineStore('authUser', () => {
     return isHost.value
   }
 
+  // Quizzers have no account: each device gets one anonymous user.
+  async function ensureSession() {
+    await init()
+    if (session.value) return
+
+    const { data, error } = await supabase.auth.signInAnonymously()
+    if (error) throw error
+    applySession(data.session)
+  }
+
   async function signIn(email: string, password: string) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw error
@@ -61,5 +71,5 @@ export const useAuthUserStore = defineStore('authUser', () => {
     queryClient.clear()
   }
 
-  return { session, isHost, userId, init, resolveIsHost, signIn, signOut }
+  return { session, isHost, userId, init, resolveIsHost, ensureSession, signIn, signOut }
 })

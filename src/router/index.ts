@@ -5,6 +5,7 @@ import { routes } from './routes'
 declare module 'vue-router' {
   interface RouteMeta {
     requiresHost?: boolean
+    hideFooter?: boolean
     title?: string
   }
 }
@@ -20,6 +21,10 @@ router.beforeEach(async (to) => {
 
   if (to.meta.requiresHost && !(await authUserStore.resolveIsHost())) {
     return { name: 'Login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.name === 'Play' && !authUserStore.session) {
+    return { name: 'Join', params: { code: to.params.code } }
   }
 
   if (to.name === 'Login' && (await authUserStore.resolveIsHost())) {

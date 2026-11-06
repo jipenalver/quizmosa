@@ -19,4 +19,10 @@ export const publicRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/public/quizzer/JoinView.vue'),
     meta: { title: 'Join a quiz' },
   },
+  {
+    path: '/play/:code',
+    name: 'Play',
+    component: () => import('@/views/public/quizzer/PlayView.vue'),
+    meta: { title: 'Play', hideFooter: true },
+  },
 ]

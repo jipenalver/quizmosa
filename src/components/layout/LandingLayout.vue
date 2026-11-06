@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import AppLogo from '@/components/common/AppLogo.vue'
 import ThemeToggle from '@/components/common/ThemeToggle.vue'
 import FooterNavigation from '@/components/navigation/FooterNavigation.vue'
+
+const route = useRoute()
 </script>
 
 <template>
@@ -20,5 +22,5 @@ import FooterNavigation from '@/components/navigation/FooterNavigation.vue'
     <RouterView />
   </v-main>
 
-  <FooterNavigation />
+  <FooterNavigation v-if="!route.meta.hideFooter" />
 </template>

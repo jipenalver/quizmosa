@@ -16,3 +16,16 @@
 .logo-link {
   color: inherit;
 }
+
+/* Big answer buttons that wrap long choices instead of cutting them off. */
+.choice-button.v-btn {
+  height: auto;
+  justify-content: flex-start;
+  min-height: 72px;
+  padding-block: 12px;
+}
+
+.choice-button .v-btn__content {
+  text-align: left;
+  white-space: normal;
+}
