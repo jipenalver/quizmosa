@@ -1,0 +1,18 @@
+:root {
+  --v-font-body: 'Inter', sans-serif;
+  --v-font-heading: 'Space Grotesk', sans-serif;
+}
+
+/* Small uppercase label, like the tagline on the logo sheet. */
+.text-label {
+  color: rgb(var(--v-theme-muted));
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Keeps the wordmark on the theme text color instead of the browser link color. */
+.logo-link {
+  color: inherit;
+}
