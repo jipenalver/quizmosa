@@ -61,6 +61,7 @@ Run these in the Supabase SQL Editor, in this order:
 2. `supabase/migrations/20261107000001_rls_fixes.sql`
 3. `supabase/migrations/20261107000002_session_rpcs.sql`
 4. `supabase/migrations/20261107000003_storage_questions.sql`
+5. `supabase/migrations/20261107000004_participants_full_name.sql`
 
 Create a storage bucket named `questions` before you run step 4. The migration makes it private, so images are served through signed URLs.
 

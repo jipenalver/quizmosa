@@ -11,6 +11,7 @@ const { data, isPending, error, refetch } = participantsQuery
 
 const headers = [
   { title: 'Display name', key: 'display_name' },
+  { title: 'Full name', key: 'full_name' },
   { title: 'Host', key: 'join_code' },
   { title: 'Questionnaire', key: 'questionnaire_name' },
   { title: 'Kind', key: 'kind' },
