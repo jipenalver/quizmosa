@@ -14,6 +14,12 @@ export const systemRoutes: RouteRecordRaw[] = [
     meta: { title: 'Questionnaires' },
   },
   {
+    path: '/questionnaires/:id',
+    name: 'QuestionnaireDetail',
+    component: () => import('@/views/system/questionnaires/QuestionnaireDetailView.vue'),
+    meta: { title: 'Questionnaire' },
+  },
+  {
     path: '/hosts',
     name: 'Hosts',
     component: () => import('@/views/system/hosts/HostsView.vue'),

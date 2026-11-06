@@ -1,0 +1,14 @@
+[
+  {
+    "prompt": "Ano ang kabisera ng Pilipinas?",
+    "choices": { "A": "Cebu", "B": "Manila", "C": "Davao", "D": "Iloilo" },
+    "answer": "B",
+    "points": 1000,
+    "seconds": 20
+  },
+  {
+    "prompt": "Ang Pilipinas ba ay isang kapuluan?",
+    "choices": { "A": "Oo", "B": "Hindi" },
+    "answer": "A"
+  }
+]
