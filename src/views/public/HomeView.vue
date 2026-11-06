@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import FooterNavigation from '@/components/navigation/FooterNavigation.vue'
 import AppLayout from '@/components/layout/AppLayout.vue'
 </script>
 
 <template>
-  <AppLayout> </AppLayout>
+  <AppLayout>
+    <template #content> <p>Welcome to the Home Page</p> </template>
+
+    <template #footer> <FooterNavigation /> </template
+  ></AppLayout>
 </template>

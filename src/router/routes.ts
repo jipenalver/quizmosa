@@ -1,9 +1,3 @@
-import HomeView from '@/views/public/HomeView.vue'
+import { publicRoutes } from './routes/public'
 
-export const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: HomeView,
-  },
-]
+export const routes = [...publicRoutes]
