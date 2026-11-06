@@ -8,6 +8,18 @@ export const systemRoutes: RouteRecordRaw[] = [
     meta: { title: 'Dashboard' },
   },
   {
+    path: '/dashboard/live/:id',
+    name: 'LiveHost',
+    component: () => import('@/views/dashboard/LiveView.vue'),
+    meta: { title: 'Live leaderboard' },
+  },
+  {
+    path: '/dashboard/hosts/:id',
+    name: 'HostDetail',
+    component: () => import('@/views/dashboard/HostDetailView.vue'),
+    meta: { title: 'Host results' },
+  },
+  {
     path: '/questionnaires',
     name: 'Questionnaires',
     component: () => import('@/views/system/questionnaires/QuestionnairesView.vue'),

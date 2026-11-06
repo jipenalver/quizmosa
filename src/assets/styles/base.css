@@ -29,3 +29,26 @@
   text-align: left;
   white-space: normal;
 }
+
+/* Animated rank changes on the leaderboard. */
+.rank-move {
+  transition: transform 0.5s ease;
+}
+
+.rank-enter-active,
+.rank-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.rank-enter-from,
+.rank-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rank-move,
+  .rank-enter-active,
+  .rank-leave-active {
+    transition: none;
+  }
+}

@@ -87,3 +87,7 @@ export type PlayReveal = {
   counts?: Record<string, number>
 }
 export type LeaderboardRow = Database['public']['Functions']['get_leaderboard']['Returns'][number]
+
+export type HistoryRow = Database['public']['Functions']['get_history']['Returns'][number]
+export type ParticipantOverviewRow =
+  Database['public']['Functions']['get_participants_overview']['Returns'][number]

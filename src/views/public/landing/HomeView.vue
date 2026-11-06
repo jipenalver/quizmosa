@@ -2,14 +2,17 @@
 import { RouterLink } from 'vue-router'
 import { useRules } from 'vuetify'
 import AppLogo from '@/components/common/AppLogo.vue'
+import HomeIntro from './partials/HomeIntro.vue'
 import { useHomeView } from './useHomeView'
 
 const rules = useRules()
 
-const { joinCode, refVForm, onFormSubmit } = useHomeView()
+const { isIntroVisible, joinCode, refVForm, onFormSubmit } = useHomeView()
 </script>
 
 <template>
+  <HomeIntro v-if="isIntroVisible" @done="isIntroVisible = false" />
+
   <v-container class="d-flex flex-column align-center justify-center fill-height ga-8">
     <div class="d-flex flex-column align-center ga-4 text-center">
       <AppLogo height="64" style="max-width: 100%" />
