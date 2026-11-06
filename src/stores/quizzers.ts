@@ -186,8 +186,16 @@ export function usePlayRealtime(
     ([session, participant], _previous, onCleanup) => {
       if (session === undefined || participant === undefined) return
 
+      // Changes made before the channel is ready are never delivered, so read once it is.
+      // This also covers reconnecting after a phone wakes.
+      const catchUp = () => {
+        queryClient.invalidateQueries({ queryKey: playKeys.session(code) })
+        queryClient.invalidateQueries({ queryKey: playKeys.participant(code) })
+      }
+
       const channel = supabase
         .channel(`play-${session}-${participant}`)
+        .on('system', {}, catchUp)
         .on(
           'postgres_changes',
           { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${session}` },
@@ -203,7 +211,9 @@ export function usePlayRealtime(
           },
           () => queryClient.invalidateQueries({ queryKey: playKeys.participant(code) }),
         )
-        .subscribe()
+        .subscribe((status) => {
+          if (status === 'SUBSCRIBED') catchUp()
+        })
 
       onCleanup(() => supabase.removeChannel(channel))
     },

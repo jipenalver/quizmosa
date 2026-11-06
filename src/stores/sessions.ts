@@ -192,8 +192,18 @@ export function useSessionRealtime(sessionId: number) {
 
   const filter = `session_id=eq.${sessionId}`
 
+  // Changes made before the channel is ready are never delivered, so read once it is.
+  const catchUp = () => {
+    invalidate(sessionKeys.detail(sessionId))
+    invalidate(sessionKeys.participants(sessionId))
+    invalidate(sessionKeys.report(sessionId))
+    invalidate(sessionKeys.leaderboard(sessionId))
+    invalidate(sessionKeys.answerCounts(sessionId))
+  }
+
   const channel = supabase
     .channel(`host-session-${sessionId}`)
+    .on('system', {}, catchUp)
     .on(
       'postgres_changes',
       { event: '*', schema: 'public', table: 'sessions', filter: `id=eq.${sessionId}` },
@@ -210,7 +220,9 @@ export function useSessionRealtime(sessionId: number) {
       invalidate(sessionKeys.leaderboard(sessionId))
       invalidate(sessionKeys.answerCounts(sessionId))
     })
-    .subscribe()
+    .subscribe((status) => {
+      if (status === 'SUBSCRIBED') catchUp()
+    })
 
   onScopeDispose(() => {
     pending.forEach((timer) => clearTimeout(timer))

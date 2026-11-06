@@ -19,7 +19,7 @@ const others = computed(() => props.rows.slice(3))
 </script>
 
 <template>
-  <div class="podium-layout">
+  <div :class="{ 'podium-layout--solo': others.length === 0 }" class="podium-layout">
     <div class="podium">
       <div
         v-for="{ row, height } in podium"
@@ -48,6 +48,10 @@ const others = computed(() => props.rows.slice(3))
   display: grid;
   gap: 48px;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+
+.podium-layout--solo {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .podium {

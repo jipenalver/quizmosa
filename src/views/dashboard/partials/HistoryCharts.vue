@@ -32,7 +32,7 @@ const scoreOptions = computed<ApexOptions>(() => ({
   colors: kinds.map((kind) => palette.value[kind]),
   stroke: { curve: 'straight', width: 2 },
   markers: { size: 5, strokeWidth: 2, hover: { size: 7 } },
-  xaxis: { type: 'datetime' },
+  xaxis: { type: 'datetime', labels: { datetimeUTC: false } },
   yaxis: { min: 0, labels: { formatter: (value) => String(Math.round(value)) } },
   legend: { position: 'top', horizontalAlign: 'left', showForNullSeries: true },
   tooltip: { x: { format: 'dd MMM yyyy' } },
