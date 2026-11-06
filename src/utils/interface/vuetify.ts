@@ -1,24 +1,52 @@
+const themeStorageKey = 'theme'
+
+type ThemeName = 'light' | 'dark'
+
+// Falls back to the system preference until the person picks a theme on this device.
+export function getStoredTheme(): ThemeName | 'system' {
+  try {
+    const stored = localStorage.getItem(themeStorageKey)
+    return stored === 'light' || stored === 'dark' ? stored : 'system'
+  } catch {
+    return 'system'
+  }
+}
+
+export function storeTheme(theme: ThemeName) {
+  try {
+    localStorage.setItem(themeStorageKey, theme)
+  } catch {
+    // Blocked storage only means the choice is not remembered.
+  }
+}
+
 export const customTheme = {
   light: {
     dark: false,
     colors: {
-      primary: '#E2431B',
-      secondary: '#274D70',
-      background: '#5C5C66',
-      'on-background': '#262B43',
-      surface: '#B4B4BE',
-      'on-surface': '#262B43',
+      primary: '#E0441D',
+      'on-primary': '#FFFFFF',
+      secondary: '#17181E',
+      'on-secondary': '#FFFFFF',
+      background: '#F5F4F0',
+      'on-background': '#17181E',
+      surface: '#FFFFFF',
+      'on-surface': '#17181E',
+      muted: '#5B5C66',
     },
   },
   dark: {
     dark: true,
     colors: {
-      primary: '#E2431B',
-      secondary: '#274D70',
-      background: '#16161D',
-      'on-background': '#EAEAFF',
-      surface: '#1A232C',
-      'on-surface': '#EAEAFF',
+      primary: '#E0441D',
+      'on-primary': '#FFFFFF',
+      secondary: '#F5F4F0',
+      'on-secondary': '#17181E',
+      background: '#17181E',
+      'on-background': '#FFFFFF',
+      surface: '#21222A',
+      'on-surface': '#FFFFFF',
+      muted: '#B9BAC2',
     },
   },
 }
@@ -63,8 +91,7 @@ export const customDefaults = {
     color: 'primary',
   },
   VCard: {
-    class: 'border-thin border-solid border-opacity-50 border-primary',
-    elevation: 2,
+    elevation: 0,
     rounded: 'xl',
   },
 }
