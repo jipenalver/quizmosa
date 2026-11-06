@@ -379,6 +379,7 @@ export type Database = {
         Args: never
         Returns: {
           display_name: string
+          full_name: string
           is_kicked: boolean
           join_code: string
           joined_at: string
