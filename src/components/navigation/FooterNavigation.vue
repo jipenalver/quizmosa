@@ -1,5 +1,12 @@
 <template>
-  <v-footer app class="justify-center" color="background">
+  <v-footer app class="flex-column ga-1 text-center" color="background">
     <span class="text-label">Live quizzes. Spill the answers.</span>
+
+    <span class="text-body-small text-muted">
+      created by:
+      <a class="text-primary" href="https://jipenalver.github.io/" rel="noopener" target="_blank">
+        Jabez Ian Chris D. Penalver
+      </a>
+    </span>
   </v-footer>
 </template>
