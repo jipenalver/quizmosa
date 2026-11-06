@@ -71,7 +71,23 @@ const isInQuestion = computed(
             </div>
           </div>
 
+          <v-btn
+            v-if="!isLive"
+            :to="{ name: 'HostDetail', params: { id: session.id } }"
+            color="primary"
+            prepend-icon="mdi-chart-box-outline"
+          >
+            Results
+          </v-btn>
+
           <div v-if="isLive" class="d-flex flex-wrap ga-2">
+            <v-btn
+              :to="{ name: 'LiveHost', params: { id: session.id } }"
+              prepend-icon="mdi-podium"
+              variant="text"
+            >
+              Leaderboard
+            </v-btn>
             <v-btn
               v-if="isInQuestion"
               :disabled="isBusy"

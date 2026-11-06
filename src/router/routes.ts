@@ -7,5 +7,11 @@ import { systemRoutes } from './routes/system'
 export const routes: RouteRecordRaw[] = [
   { path: '/', component: LandingLayout, children: publicRoutes },
   { path: '/', component: AppLayout, meta: { requiresHost: true }, children: systemRoutes },
+  {
+    path: '/dashboard/live/:id/screen',
+    name: 'BigScreen',
+    component: () => import('@/views/dashboard/BigScreenView.vue'),
+    meta: { requiresHost: true, title: 'Big screen' },
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]

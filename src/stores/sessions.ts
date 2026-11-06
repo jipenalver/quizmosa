@@ -16,6 +16,11 @@ export const sessionKeys = {
   detail: (id: number) => ['sessions', id] as const,
   participants: (id: number) => ['sessions', id, 'participants'] as const,
   report: (id: number) => ['sessions', id, 'report'] as const,
+  leaderboard: (id: number) => ['sessions', id, 'leaderboard'] as const,
+  answerCounts: (id: number, questionId?: number | null) =>
+    questionId === undefined
+      ? (['sessions', id, 'answer-counts'] as const)
+      : (['sessions', id, 'answer-counts', questionId] as const),
 }
 
 // Hosts (sessions)
@@ -162,6 +167,7 @@ export function useKickParticipant(sessionId: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: sessionKeys.participants(sessionId) })
       queryClient.invalidateQueries({ queryKey: sessionKeys.report(sessionId) })
+      queryClient.invalidateQueries({ queryKey: sessionKeys.leaderboard(sessionId) })
     },
   })
 }
@@ -196,10 +202,14 @@ export function useSessionRealtime(sessionId: number) {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'participants', filter }, () => {
       invalidate(sessionKeys.participants(sessionId))
       invalidate(sessionKeys.report(sessionId))
+      invalidate(sessionKeys.leaderboard(sessionId))
+      invalidate(sessionKeys.answerCounts(sessionId))
     })
-    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'answers', filter }, () =>
-      invalidate(sessionKeys.report(sessionId)),
-    )
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'answers', filter }, () => {
+      invalidate(sessionKeys.report(sessionId))
+      invalidate(sessionKeys.leaderboard(sessionId))
+      invalidate(sessionKeys.answerCounts(sessionId))
+    })
     .subscribe()
 
   onScopeDispose(() => {

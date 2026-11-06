@@ -45,3 +45,9 @@ export const statusColors = {
   reveal: 'warning',
   finished: undefined,
 } as const
+
+// Validated for colorblind separation and contrast against each mode's surface.
+export const kindChartColors = {
+  light: { standard: '#E0441D', pretest: '#2F6DB5', posttest: '#1F8A70' },
+  dark: { standard: '#E0441D', pretest: '#5D8CDB', posttest: '#27A07A' },
+} as const
