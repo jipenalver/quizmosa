@@ -1,41 +1,50 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+import AppLogo from '@/components/common/AppLogo.vue'
+import ThemeToggle from '@/components/common/ThemeToggle.vue'
+import SideNavigation from '@/components/navigation/SideNavigation.vue'
+import { useAuthUserStore } from '@/stores/authUser'
 
-const emit = defineEmits(['isDrawerVisible', 'theme'])
+const router = useRouter()
+const authUserStore = useAuthUserStore()
 
-const theme = ref(localStorage.getItem('theme') ?? 'light')
+// null lets Vuetify open the drawer on desktop and close it on mobile.
+const isDrawerVisible = ref<boolean | null>(null)
 
-const onToggleTheme = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-  localStorage.setItem('theme', theme.value)
-  emit('theme', theme.value)
+const onSignOut = async () => {
+  await authUserStore.signOut()
+  router.replace({ name: 'Login' })
 }
 </script>
 
 <template>
-  <v-responsive>
-    <v-app :theme="theme">
-      <v-app-bar>
-        <v-app-bar-nav-icon icon="mdi-menu" :theme="theme" @click="emit('isDrawerVisible')">
-        </v-app-bar-nav-icon>
+  <v-app-bar color="surface" flat border="b">
+    <v-app-bar-nav-icon
+      aria-label="Toggle navigation"
+      @click="isDrawerVisible = !isDrawerVisible"
+    ></v-app-bar-nav-icon>
 
-        <v-app-bar-title class="text-display-medium font-weight-bold">
-          quiz<span class="text-primary">mosa</span>
-        </v-app-bar-title>
+    <RouterLink :to="{ name: 'Dashboard' }" class="logo-link d-flex" aria-label="Dashboard">
+      <AppLogo height="26" />
+    </RouterLink>
 
-        <v-btn
-          :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          @click="onToggleTheme"
-        ></v-btn>
-      </v-app-bar>
+    <v-spacer></v-spacer>
 
-      <slot name="navigation"> </slot>
+    <ThemeToggle />
 
-      <v-main>
-        <slot name="content"> </slot>
-      </v-main>
+    <v-btn
+      icon="mdi-logout"
+      aria-label="Sign out"
+      class="mr-2"
+      variant="text"
+      @click="onSignOut"
+    ></v-btn>
+  </v-app-bar>
 
-      <slot name="footer"></slot>
-    </v-app>
-  </v-responsive>
+  <SideNavigation v-model="isDrawerVisible" />
+
+  <v-main>
+    <RouterView />
+  </v-main>
 </template>
