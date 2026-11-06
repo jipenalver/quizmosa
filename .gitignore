@@ -40,7 +40,9 @@ __screenshots__/
 
 # Misc
 .claude
-.CLAUDE.md
+.mcp.json
+CLAUDE.md
+docs
 
 # Environment Variables
 .env
