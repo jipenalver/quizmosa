@@ -3,7 +3,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 </script>
 
 <template>
-  <v-footer class="text-center d-flex flex-column ga-2 py-4" color="indigo-lighten-1" app>
+  <v-footer class="text-center d-flex flex-column ga-2 py-4" app>
     <div class="d-flex ga-3">
       <v-btn
         v-for="icon in icons"
@@ -27,6 +27,8 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 
     <v-divider></v-divider>
 
-    <div>{{ new Date().getFullYear() }} — <strong>Vuetify</strong></div>
+    <div>
+      {{ new Date().getFullYear() }} — <strong> quiz<span class="text-primary">mosa</span> </strong>
+    </div>
   </v-footer>
 </template>
