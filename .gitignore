@@ -41,3 +41,6 @@ __screenshots__/
 # Misc
 .claude
 .CLAUDE.md
+
+# Environment Variables
+.env
