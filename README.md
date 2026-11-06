@@ -1,48 +1,94 @@
-# .
+<p align="center">
+  <img src="src/assets/logos/logo-light.svg" alt="Quizmosa" width="280" />
+</p>
 
-This template should help get you started developing with Vue 3 in Vite.
+<p align="center"><strong>Live quizzes. Spill the answers.</strong></p>
 
-## Recommended IDE Setup
+Quizmosa runs live quizzes in a room. Many people answer from their phones at the same time, each question has a server-enforced countdown, rankings update live, and a big-screen view shows the leaderboard on a projector.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+The name comes from the Filipino word _chismosa_ (gossiper).
 
-## Recommended Browser Setup
+## Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+**For admins** (email and password)
 
-## Type Support for `.vue` Imports in TS
+- Build questionnaires of kind standard, pre-test or post-test, with images, 2 to 4 choices, points, per-question time limits and drag-to-reorder
+- Import questions from JSON, with a per-row preview and a downloadable sample
+- Host a live quiz with a join code and QR, and control it: start, next question, reveal, finish, kick
+- Show a live leaderboard and a fullscreen big-screen mode for a projector
+- Review history with charts, per-host reports and a participant list
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+**For quizzers** (no account)
 
-## Customize configuration
+- Join with a 6-character code or QR, using Supabase anonymous sign-in
+- Answer on a mobile-first screen with a countdown, reveal and final rank
+- Pre-tests never show the correct answer, so they don't spoil the post-test
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Tech stack
 
-## Project Setup
+Vue 3, TypeScript, Vite, Vuetify 4, Pinia, TanStack Query, Supabase (Auth, Postgres, RPC, Realtime, Storage), ApexCharts and Three.js.
 
-```sh
-npm install
+## Getting started
+
+You need Node `^22.18.0` or `>=24.12.0`, and a Supabase project.
+
+1. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+2. Create a `.env` file in the repo root:
+
+   ```sh
+   VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+   ```
+
+3. Set up the database. See [Database setup](#database-setup).
+
+4. Start the dev server:
+
+   ```sh
+   npm run dev
+   ```
+
+## Database setup
+
+Run these in the Supabase SQL Editor, in this order:
+
+1. `docs/quizmosa-db.sql` (the baseline schema)
+2. `supabase/migrations/20261107000001_rls_fixes.sql`
+3. `supabase/migrations/20261107000002_session_rpcs.sql`
+4. `supabase/migrations/20261107000003_storage_questions.sql`
+
+Create a storage bucket named `questions` before you run step 4. The migration makes it private, so images are served through signed URLs.
+
+Then, in the Supabase dashboard:
+
+- Turn on anonymous sign-ins. Keep "Allow new users to sign up" on, because turning it off also blocks anonymous sign-ins.
+- Raise the anonymous sign-in rate limit. Everyone in a room shares one IP address on the same Wi-Fi, so the default limit is too low for a live event.
+
+### Add an admin
+
+The app has no admin sign-up, and clients cannot insert into `hosts`. Create the user under Authentication in the Supabase dashboard, then run:
+
+```sql
+insert into public.hosts (user_id, host_name)
+select id, 'Admin' from auth.users where email = 'admin@example.com';
 ```
 
-### Compile and Hot-Reload for Development
+## Commands
 
-```sh
-npm run dev
-```
+| Task                          | Command              |
+| ----------------------------- | -------------------- |
+| Dev server                    | `npm run dev`        |
+| Build (type-check and bundle) | `npm run build`      |
+| Preview the build             | `npm run preview`    |
+| Type-check only               | `npm run type-check` |
+| Lint (oxlint and eslint)      | `npm run lint`       |
+| Format                        | `npm run format`     |
 
-### Type-Check, Compile and Minify for Production
+## Author
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Created by [Jabez Ian Chris D. Penalver](https://jipenalver.github.io/).
