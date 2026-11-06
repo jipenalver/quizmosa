@@ -10,3 +10,9 @@ import AppLayout from '@/components/layout/AppLayout.vue'
     <template #footer> <FooterNavigation /> </template
   ></AppLayout>
 </template>
+
+<style>
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+</style>
