@@ -26,6 +26,12 @@ export const systemRoutes: RouteRecordRaw[] = [
     meta: { title: 'Hosts' },
   },
   {
+    path: '/hosts/:id',
+    name: 'HostControl',
+    component: () => import('@/views/system/hosts/HostControlView.vue'),
+    meta: { title: 'Host control' },
+  },
+  {
     path: '/participants',
     name: 'Participants',
     component: () => import('@/views/system/participants/ParticipantsView.vue'),

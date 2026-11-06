@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import { useRules } from 'vuetify'
+import { useHostFormDialog } from './useHostFormDialog'
+
+const isOpen = defineModel<boolean>({ required: true })
+
+const rules = useRules()
+
+const {
+  questionnairesQuery,
+  questionnaireId,
+  questionnaireOptions,
+  formAction,
+  refVForm,
+  onFormSubmit,
+} = useHostFormDialog(isOpen)
+</script>
+
+<template>
+  <v-dialog v-model="isOpen" max-width="480">
+    <v-card class="pa-2" title="New host">
+      <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+        <v-card-text>
+          <v-alert
+            v-if="formAction.formAlert"
+            :text="formAction.formMessage"
+            class="mb-4"
+            density="compact"
+            type="error"
+            variant="tonal"
+          ></v-alert>
+
+          <v-select
+            v-model="questionnaireId"
+            :items="questionnaireOptions"
+            :loading="questionnairesQuery.isPending.value"
+            :rules="[rules.required('Choose a questionnaire')]"
+            label="Questionnaire"
+            no-data-text="No questionnaires with questions yet"
+          ></v-select>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn variant="text" @click="isOpen = false">Cancel</v-btn>
+          <v-btn :loading="formAction.formProcess" color="primary" type="submit" variant="flat">
+            Create
+          </v-btn>
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
+</template>

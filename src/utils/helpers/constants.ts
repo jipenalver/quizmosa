@@ -31,3 +31,17 @@ export const secondsMax = 600
 export const pointsDefault = 1000
 export const imageMaxBytes = 5 * 1024 * 1024
 export const imageTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/gif']
+
+export const statusLabels = {
+  lobby: 'Lobby',
+  question: 'Live',
+  reveal: 'Reveal',
+  finished: 'Finished',
+} as const
+
+export const statusColors = {
+  lobby: 'info',
+  question: 'primary',
+  reveal: 'warning',
+  finished: undefined,
+} as const
