@@ -5,6 +5,7 @@ import EmptyState from '@/components/common/EmptyState.vue'
 import QuestionImage from '@/components/common/QuestionImage.vue'
 import PlayChoices from './partials/PlayChoices.vue'
 import PlayFinal from './partials/PlayFinal.vue'
+import PlayLobbyGuide from './partials/PlayLobbyGuide.vue'
 import PlayReveal from './partials/PlayReveal.vue'
 import { usePlayView } from './usePlayView'
 
@@ -63,11 +64,13 @@ const { data: question } = questionQuery
       </RouterLink>
     </EmptyState>
 
-    <EmptyState
-      v-else-if="screen === 'lobby'"
-      :title="`You're in, ${participant?.display_name ?? 'friend'}!`"
-      text="Waiting for the host to start."
-    />
+    <template v-else-if="screen === 'lobby'">
+      <EmptyState
+        :title="`You're in, ${participant?.display_name ?? 'friend'}!`"
+        text="Waiting for the host to start."
+      />
+      <PlayLobbyGuide />
+    </template>
 
     <PlayFinal
       v-else-if="screen === 'finished'"
